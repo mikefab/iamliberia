@@ -1,0 +1,55 @@
+.container
+  / Page Heading
+  .row
+    .col-lg-12
+      / %h1.page-header
+      /   Page Heading
+      /   %small Secondary Text
+  / /.row
+  / Projects Row
+
+
+
+  %div{'ng-controller' => 'studentsCtrl'}
+    .row{'ng-repeat' => 'set in students'}
+      .col-xs-6.portfolio-item{'ng-repeat' => 'student in set'}
+        %span
+          / %u
+          /   {{student.username}}
+          .row
+            .col-xs-4
+              %img.img-rounded{'ng-src' => 'assets/{{student.username}}', style: 'width:100%'}
+            .col-xs-8
+
+              %div{style: 'width: 400px'}
+                %timeline{style: 'font-size: 10px;'}
+                  %timeline-node{:side => 'left', 'ng-repeat' => '(date, achievement) in student.achievement_dates'}
+                    %timeline-badge.info{style: 'width:10pt;height:10pt;'} 
+                      %i.glyphicon.glyphicon-check
+                    %timeline-panel
+                      %small.text-muted
+                        %i.glyphicon.glyphicon-time
+                        {{date}}
+                      %timeline-content
+                        %p {{achievement}}
+                  %timeline-node{:side => "right"}
+                    %timeline-badge.warning
+                      %i.glyphicon.glyphicon-credit-card
+                    %timeline-panel
+                      %timeline-heading
+                        %timeline-title Another twitter post
+                        %p
+                          %small.text-muted 12 hours ago via Twitter
+                      %timeline-content
+                        %p Another twitter post goes here            
+            /   %langs{langs: 'student.langs'}
+            / .col-xs-5
+            /   %khan{khan: 'student.khan_exercises'}
+
+    %hr
+      / Footer
+      %footer
+        .row
+          .col-lg-12
+            %p Copyright &copy; Your Website 2014
+        / /.row

@@ -1,0 +1,67 @@
+!!!
+%html{'ng-app' => 'myApp'}
+  %head
+    %title I am liberia
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+    :css
+      / body {
+      /     padding-top: 10px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+      / }
+
+      .portfolio-item {
+          margin-bottom: 25px;
+      }
+
+      footer {
+          margin: 50px 0;
+      }
+
+      .toptobottom{
+
+        display:inline-block;
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+        -webkit-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+
+      }
+
+
+  %body
+    .row
+      .col-xs-4
+        %img{src: 'assets/prince-anthony.jpg',  width: '104%'}
+      .col-xs-1{style: 'background-color:black; color:white;min-height:639px;'} 
+        / %div.toptobottom{style: 'font-size:14pt;width:200px'}
+        /   I AM LIBERIA
+
+      .col-xs-7
+        asdf
+    / Navigation
+
+    %nav.navbar.navbar-inverse{:role => "navigation"}
+      .container
+        / Brand and toggle get grouped for better mobile display
+        .navbar-header
+          %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "#"} I am Liberia
+        / Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              %a{:href => "#"} About
+            %li
+              = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
+        / /.navbar-collapse
+      / /.container
+    / Page Content
+
+    = yield

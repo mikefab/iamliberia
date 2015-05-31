@@ -1,0 +1,11 @@
+%table
+  %thead
+    %tr
+      %th{ style:'padding-right:20px;'}  Duolingo
+      %th points
+  %tbody
+    %tr{'ng-repeat' => 'lang in langs'} 
+      %td
+        {{lang['lang_string']}}
+      %td
+        {{lang['points']}}

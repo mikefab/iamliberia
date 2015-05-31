@@ -1,0 +1,8 @@
+%table
+  %thead
+    %tr
+      %th Khan Academy
+  %tbody
+    %tr{'ng-repeat' => 'exercise in khan'} 
+      %td{style: 'font-size:9pt;'} 
+        {{exercise['exercise_name']}}
