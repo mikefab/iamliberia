@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+group :production do
+  gem 'rails_12factor'
+end
 gem 'omniauth-khan-academy'
 gem 'oauth'
 gem 'mechanize'
