@@ -4,9 +4,11 @@ class Api::StudentsController < ApplicationController
   def index
     students = []
     User.all.each do |u|
+      
       students << {
         username: u.username,
         name:     u.name,
+        profile_image: ActionController::Base.helpers.asset_path("assets/#{u.username}.jpg")
         langs:    u.last_lang_lesson[:langs],
         calendar: u.last_lang_lesson[:calendar],
         achievement_dates: u.last_lang_lesson[:achievement_dates],
