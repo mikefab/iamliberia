@@ -4,8 +4,12 @@
       %th{ style:'padding-right:20px;'}  Duolingo
       %th points
   %tbody
-    %tr{'ng-repeat' => 'lang in langs'} 
+    %tr{'ng-repeat' => 'lang in student.langs'} 
       %td
         {{lang['lang_string']}}
       %td
         {{lang['points']}}
+
+
+%ul{'ng-repeat' => 'achievement in student.achievement_dates'}
+  %li {{achievement[1]}}  

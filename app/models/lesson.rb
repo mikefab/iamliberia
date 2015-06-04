@@ -14,8 +14,7 @@ class Lesson
       |s|
       achievement_dates[s['learned_ts']] = s['url_title'] unless s['learned_ts'].nil?
     }
-    puts achievement_dates
-    achievement_dates
+    achievement_dates.sort.reverse
   end
 
 

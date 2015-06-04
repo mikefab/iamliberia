@@ -36,12 +36,12 @@
       .col-xs-4
         =image_tag asset_path('prince-anthony.jpg'), width: '104%'
 
-      .col-xs-1
+      .col-xs-1{style: 'background-color:black; color:white;min-height:639px;'} 
         / %div.toptobottom{style: 'font-size:14pt;width:200px'}
         /   I AM LIBERIA
 
       .col-xs-7
-
+        
     / Navigation
 
     %nav.navbar.navbar-inverse{:role => "navigation"}
@@ -53,14 +53,12 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{:href => "#"} I am Liberia
+          %a.navbar-brand{:href => "#"} I AM LIBERIA
         / Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li
-              %a{:href => "#"} About
-            %li
-              = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
+              = link_to "Google", user_omniauth_authorize_path(:google_oauth2)
         / /.navbar-collapse
       / /.container
     / Page Content

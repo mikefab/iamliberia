@@ -1,5 +1,5 @@
 #, 'myApp.directives', 'myApp.services', 'restangular', 'ui.bootstrap'
-angular.module('myApp', ['myApp.controllers', 'myApp.directives', 'restangular', 'angular-timeline'])
+angular.module('myApp', ['myApp.controllers', 'myApp.directives', 'myApp.filters', 'restangular', 'angular-timeline', 'angularMoment', 'angularUtils.directives.dirPagination'])
 .config [
     'RestangularProvider'
     (RestangularProvider) ->

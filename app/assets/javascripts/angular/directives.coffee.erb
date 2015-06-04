@@ -3,11 +3,9 @@ angular.module('myApp.directives', [])
   .directive 'langs', () ->
     restrict: 'E'
     scope:
-      langs: '='
+      student: '='
     templateUrl: "<%= asset_path 'assets/langs.html' %>"
     link: ($scope, $el, $attrs) ->
-      _.each $scope.langs, (l) ->
-        console.log l['lang_string'] + ' ' + l['points'] 
 
 
   .directive 'khan', () ->
@@ -16,5 +14,21 @@ angular.module('myApp.directives', [])
       khan: '='
     templateUrl: "<%= asset_path 'assets/khan.html' %>"
     link: ($scope, $el, $attrs) ->
-      _.each $scope.khan, (k) ->
-        console.log k
+      show_date = true
+      $scope.check_date_change = (date) ->
+        show_date = false
+        if date != $scope.exercise_date
+          show_date = true
+          $scope.exercise_date = date
+        show_date
+        
+      $scope.exercise_date = $scope.khan['exercises'][0]['date']
+      console.log "!!!!"
+      console.log $scope.exercise_date
+
+
+  .directive 'history', () ->
+    scope:
+      student: '='
+    templateUrl: "<%= asset_path 'assets/history.html'%>"
+    link: ($scope, $el, $attrs) ->

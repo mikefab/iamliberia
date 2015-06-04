@@ -19,4 +19,7 @@
 //= require restangular/dist/restangular
 //= require underscore/underscore
 //= require angular-timeline
+//= require moment
+//= require angular-moment
+//= require angular-utils-pagination
 //= require_tree .

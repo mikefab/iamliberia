@@ -36,12 +36,16 @@ class User
     lesson = Lesson.where(
       username: self.username,
       source:   'khan'
-      ).last.content.reverse[0..5].map{
+      ).last
+
+
+    exercises = lesson.content.reverse.map{
         |e| {
           date:          e['date'].to_date, 
           exercise_name: e['exercise_name']
         }
       }
+      {points: lesson['points'], exercises: exercises}
   end
 
 
@@ -79,7 +83,7 @@ class User
         end
       end
     end
-    puts "#{achievement_dates} !!!!"
+
     {achievement_dates: achievement_dates, langs: langs, calendar: lesson['calendar']}
   end
 
