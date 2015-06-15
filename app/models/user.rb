@@ -38,7 +38,6 @@ class User
       source:   'khan'
       ).last
 
-
     exercises = lesson.content.reverse.map{
         |e| {
           date:          e['date'].to_date, 
@@ -48,27 +47,28 @@ class User
       {points: lesson['points'], exercises: exercises}
   end
 
-
   def last_lang_lesson
     # Current language being learned
-    current_lng       = ''
-    current_hash      = {}
-    achievement_dates = {}
+    current_lng    = ''
+    current_hash   = {}
+    achievements   = []
+
     # Get most recent lesson. C
     lesson = Lesson.where(
       username: self.username,
       source:   'duolingo'
-      ).last.content
-      
+    ).last.content
+
     lesson['language_data'].each do |lng|
-
       current_lng  = lng[0]
-
       # Hash of date and lesson name
-      achievement_dates = Lesson.achievement_dates(achievement_dates, lng[1])
+
+
+      achievements = Lesson.achievements(lng[1], lesson['calendar']).sort_by{|o| o[:date]}.reverse
 
       current_hash = {fluency_score: lng[1]['fluency_score'], streak: lng[1]['streak']}
     end
+
     langs = {}
     # Add only languages that have been studied so far
     lesson['languages'].each do |l|
@@ -84,9 +84,8 @@ class User
       end
     end
 
-    {achievement_dates: achievement_dates, langs: langs, calendar: lesson['calendar']}
+    {achievement_dates: achievements, langs: langs, calendar: lesson['calendar']}
   end
-
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
       data = access_token.info
