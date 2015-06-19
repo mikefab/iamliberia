@@ -17,7 +17,7 @@
       }
 
       footer {
-          margin: 50px 0;
+          margin-left: 10px;
       }
 
       .toptobottom{
@@ -42,6 +42,21 @@
         /   I AM LIBERIA
 
       .col-xs-7
+        %div{style: 'position:relative;margin-top:25%;width:80%;'}
+          %p
+            This site is an attempt to demonstrate that underprivileged young adults in Monrovia can educate themselves online. Scroll down to see some of their progress retreived from
+            %a{src: 'http://www.duolingo.com'} duolingo 
+            and
+            = succeed '.' do
+              %a{src: 'http://wwww.khanacademy.org'} khanacademy
+            They're also learning typing at
+            = succeed '.' do
+              %a{src: 'http://www.typingclub.com'} typingclub
+            Notice how Anthony, the second guy down is ripping through Spanish!
+
+          %p
+            %a{src: 'http://www.ilabliberia.org'} iLab Liberia
+            has been kind enough to let us use their internet and laptops. If you have similar facilities and would like to do something similar, please contact me at the link at the footer.            
 
     / Navigation
 
@@ -54,7 +69,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{:href => "#"} I AM LIBERIA
+          %a.navbar-brand
         / Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           %ul.nav.navbar-nav
@@ -63,15 +78,10 @@
         / /.navbar-collapse
       / /.container
     / Page Content
+
     = yield
 
 
-    %hr
-      / Footer
-      %footer
-        .row
-          .col-lg-12
-            %p
 
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -26,6 +26,17 @@
             %img.img-rounded{'ng-src' => 'assets/{{student.username}}', style: 'width:100%'}
           .col-xs-7
             %history{student: 'student'}
+
+
+
+    / Footer
+    %footer{'ng-show' => '!loader.loading'} 
+      .row
+        .col-lg-12
+          %p
+            %a{href: 'https://github.com/mikefab'} mikefab
+
+
           / .col-xs-5
 
         /       .row
