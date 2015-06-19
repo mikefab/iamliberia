@@ -25,7 +25,10 @@
             %profile{image_name: 'student.username'}
             %img.img-rounded{'ng-src' => 'assets/{{student.username}}', style: 'width:100%'}
           .col-xs-7
-            %history{student: 'student'}
+            %p
+              {{student.name}}
+            %p
+              %history{student: 'student'}
 
 
 
