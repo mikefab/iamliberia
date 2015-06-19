@@ -4,11 +4,12 @@ angular.module('myApp.controllers', [])
   '$scope'
   '$http'
   ($scope, $http) ->
-
+    $scope.loader = loading: true
     $scope.thing = (date) ->
       new Date(date);
 
     $http.get('/api/students').success (data, status, headers, config) ->
+      $scope.loader.loading = false
       $scope.students = _.chain(data).groupBy((element, index) ->
                         Math.floor index / 1
                       ).toArray().value()

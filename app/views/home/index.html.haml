@@ -10,6 +10,12 @@
 
 
   %div{'ng-controller' => 'studentsCtrl'}
+    %div{'ng-show' => 'loader.loading'}
+      .row
+        .col-xs-3
+        .col-xs-2
+          =image_tag asset_path('ajax-loader.gif')
+        .col-xs-7
     .row{'ng-repeat' => 'set in students'}
       .col-xs-12.portfolio-item{'ng-repeat' => 'student in set'}
         / %u
@@ -60,10 +66,5 @@
         / /       %khan{khan: 'student.khan_exercises'}
 
 
-    %hr
-      / Footer
-      %footer
-        .row
-          .col-lg-12
-            %p Copyright &copy; Your Website 2014
+
         / /.row
