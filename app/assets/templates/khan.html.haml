@@ -1,10 +1,10 @@
 %div{style: 'font-size:24px'} 
   Khan Academy Points: {{khan['points']}}
 %u
+
   Exercises
 
-
-%div{'dir-paginate' => "exercise in khan['exercises']| itemsPerPage: 20"}
+%div{'dir-paginate' => "exercise in khan['exercises']| itemsPerPage: 20", "pagination-id" => "student.username"}
   %strong{style: 'font-size:14px'}
     %div{'ng-show' => "check_date_change(exercise['date'])", 'am-time-ago' => "exercise['date']"} 
 
@@ -15,7 +15,8 @@
 / %ul
 /   %li{'dir-paginate' => "group in exercises_by_date| itemsPerPage: 2"}
 /     {{group[0]['date']}}
-%dir-pagination-controls
+
+%dir-pagination-controls{"pagination-id" =>  "student.username"}
 
 / %table
 /   %thead

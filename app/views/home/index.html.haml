@@ -18,8 +18,6 @@
         .col-xs-7
     .row{'ng-repeat' => 'set in students'}
       .col-xs-12.portfolio-item{'ng-repeat' => 'student in set'}
-        / %u
-        /   {{student.username}}
         .row
           .col-xs-5
             %profile{image_name: 'student.username'}

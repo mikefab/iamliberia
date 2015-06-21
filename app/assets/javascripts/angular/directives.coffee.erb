@@ -11,9 +11,11 @@ angular.module('myApp.directives', [])
   .directive 'khan', () ->
     restrict: 'E'
     scope:
-      khan: '='
+      khan:    '='
+      student: '='
     templateUrl: "<%= asset_path 'assets/khan.html' %>"
     link: ($scope, $el, $attrs) ->
+
       show_date = true
       $scope.check_date_change = (date) ->
         show_date = false
@@ -23,8 +25,7 @@ angular.module('myApp.directives', [])
         show_date
         
       $scope.exercise_date = $scope.khan['exercises'][0]['date']
-      console.log "!!!!"
-      console.log $scope.exercise_date
+
 
 
   .directive 'history', () ->
