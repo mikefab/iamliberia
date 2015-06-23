@@ -11,7 +11,7 @@
         {{lang['points']}}
 
 
-%ul{'ng-repeat' => "achievement in student.achievement_dates.slice(0, 11)"}
+%ul{'ng-repeat' => "achievement in student.achievement_dates.slice(0, 12)"}
   %li {{achievement.title}}  {{achievement.progress_percent}}% - {{achievement.progress}} lessons
   %div{'ng-show' => "achievement.date", 'am-time-ago' => "achievement.date"} 
   %div{'ng-show' => "!achievement.date", 'am-time-ago' => "student.calendar[0]['d']"}
