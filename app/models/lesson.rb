@@ -20,7 +20,7 @@ class Lesson
         date:             shave_date(s['learned_ts'], calendar),
         title:            s['url_title'],
         num_lessons:      s['num_lessons'],
-        progress_percent: s['progress_percent'],
+        progress_percent: s['progress_percent'].to_i,
         dates:            [],
         progress:         progress_complete(s)
       }
