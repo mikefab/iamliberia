@@ -2,6 +2,22 @@ require 'rubygems'
 require 'mechanize'
 require 'json'
 
+task :import_khan_lessons => [:environment] do
+  f = File.new(Rails.root + 'lib/tasks/khan_math_lessons.txt')
+
+  while (line = f.gets)
+    line = line.split(/\t/)
+    level, exercise, tutorial, topic = line
+    Exercise.find_or_initialize_by(
+      subject:  'math',
+      level:    level,
+      exercise: exercise,
+      tutorial: tutorial,
+      topic:    topic
+    ).save!
+  end
+
+end
 
 task :fetch_khan_data => [:environment] do
   a = Mechanize.new { |agent|

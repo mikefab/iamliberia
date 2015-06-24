@@ -2,21 +2,50 @@
   Khan Academy Points: {{khan['points']}}
 %u
 
-  Exercises
 
-%div{'dir-paginate' => "exercise in khan['exercises']| itemsPerPage: 20", "pagination-id" => "student.username"}
-  %strong{style: 'font-size:14px'}
-    %div{'ng-show' => "check_date_change(exercise['date'])", 'am-time-ago' => "exercise['date']"} 
 
-  %span{style: 'font-size:14px'}
-    {{exercise['exercise_name']}}
+.row
+  .col-xs-6
+    %div
+      Exercises
+    %div{'ng-repeat' => "exercise in khan['exercises'].slice(0, 25)"}
+      %strong
+        %div{'ng-show' => "check_date_change(exercise['date'])", 'am-time-ago' => "exercise['date']"} 
+
+      %span{style: 'font-size:12px'}
+        {{exercise['exercise_name']}}
+    %br
+    %div{'ng-show' => "khan['exercises'].length - 25 > 0"}
+      {{khan['exercises'].length - 25}} more exercises completed
+
+
+  .col-xs-6
+    %div
+      videos
+    %div{'ng-repeat' => "video in khan['videos'].slice(0, 15)"}
+      %strong
+        %div{'ng-show' => "check_date_change(video['date'])", 'am-time-ago' => "video['date']"} 
+
+      %span{style: 'font-size:12px'}
+        {{video['title']}}
+    %br
+    %div{'ng-show' => "khan['videos'].length - 15 > 0"}
+      {{khan['videos'].length - 15}} more vids watched
+
+
+/ %div{'dir-paginate' => "exercise in khan['exercises']| itemsPerPage: 20", "pagination-id" => "student.username"}
+/   %strong{style: 'font-size:14px'}
+/     %div{'ng-show' => "check_date_change(exercise['date'])", 'am-time-ago' => "exercise['date']"} 
+
+/   %span{style: 'font-size:14px'}
+/     {{exercise['exercise_name']}}
 
 
 / %ul
 /   %li{'dir-paginate' => "group in exercises_by_date| itemsPerPage: 2"}
 /     {{group[0]['date']}}
 
-%dir-pagination-controls{"pagination-id" =>  "student.username"}
+	
 
 / %table
 /   %thead

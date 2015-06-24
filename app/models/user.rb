@@ -29,8 +29,8 @@ class User
   has_many :lessons, :foreign_key => 'username'
 
   def last_activity_date
-    l = self.last_lesson
-    l.nil? ? Date.new(1900,1,1) : Date.parse(self.last_lesson.content.last['date'])
+    l = self.last_lesson # Khan lesson
+    l.nil? ? Date.new(1900,1,1) : Date.parse(self.last_lesson.exercises.last['date'])
     
   end
 
@@ -49,16 +49,36 @@ class User
   end
 
   def last_khan_exercise
-    
     lesson = self.last_lesson
+    points = lesson['points'].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
 
-    exercises = lesson.content.reverse.map{
-        |e| {
+    
+
+
+    exercises = lesson.exercises.reverse.map{
+        |e| 
+        {
           date:          e['date'].to_date, 
           exercise_name: e['exercise_name']
         }
       }
-      {points: lesson['points'], exercises: exercises}
+
+    exercises.each do |e|
+
+
+    end    
+
+    videos = lesson['videos'].select{
+                |v| v['completed'] == true
+              }.reverse.map{
+                |v| {
+                      date:  v['last_watched'],
+                      title: v['video']['translated_title']
+                    }
+                  }.sort_by{|v| v['last_watched']}.reverse
+
+
+      {points: points, exercises: exercises, videos: videos}
   end
 
   def last_lang_lesson

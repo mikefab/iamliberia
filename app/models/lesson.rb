@@ -1,6 +1,8 @@
 class Lesson
   include Mongoid::Document
   field :content,    type: Hash
+  field :exercises,  type: Hash
+  field :videos,     type: Hash
   field :source,     type: String
   field :created_at, type: Date
   field :username,   type: String
