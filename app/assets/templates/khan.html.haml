@@ -21,7 +21,7 @@
 
   .col-xs-6
     %div
-      videos
+      Videos
     %div{'ng-repeat' => "video in khan['videos'].slice(0, 15)"}
       %strong
         %div{'ng-show' => "check_date_change(video['date'])", 'am-time-ago' => "video['date']"} 
