@@ -1,16 +1,53 @@
 require 'rubygems'
 require 'mechanize'
 require 'json'
+require 'net/http'
+
+
+task :update_khan_exercises => [:environment] do
+  agent = Mechanize.new { |a|
+  a.user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'
+  a.follow_meta_refresh = true
+  }
+
+
+  Exercise.where(subject: nil).each do |e|
+    url      = e.content['ka_url']
+    page     = agent.get(url)
+
+    tutorial = page.search('*').select{|e| e[:class] =~ /tutorial-title/}.first.text
+    topic    = page.search('*').select{|e| e[:class] =~ /no-underline topic-title/}.first.text 
+    topic.gsub!(/^(\n\s+)/,'')
+    topic.gsub!(/(\n\s+)$/,'')
+
+    parts    = page.uri.to_s.split('/')
+    subject  = parts[3]
+    level    = parts[4]
+    title    = parts.last
+    e.update_attributes(subject: subject, level: level, topic: topic, tutorial: tutorial, title: title)
+    puts "#{subject} #{level} #{topic} #{tutorial} - #{title}"
+  end
+
+end
+
+
+task :get_khan_exercises => [:environment] do
+  uri = URI('http://www.khanacademy.org/api/v1/exercises')
+  s = Net::HTTP.get(uri)
+  puts s
+end
+
 
 task :import_khan_lessons => [:environment] do
   f = File.new(Rails.root + 'lib/tasks/khan_math_lessons.txt')
 
   while (line = f.gets)
     line = line.split(/\t/)
-    level, exercise, tutorial, topic = line
+    index, level, exercise, tutorial, topic = line
     Exercise.find_or_initialize_by(
-      subject:  'math',
-      level:    level,
+      subject:  'math'  ,
+      index:    index   ,
+      level:    level   ,
       exercise: exercise,
       tutorial: tutorial,
       topic:    topic

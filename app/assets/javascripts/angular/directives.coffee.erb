@@ -7,6 +7,16 @@ angular.module('myApp.directives', [])
     templateUrl: "<%= asset_path 'assets/langs.html' %>"
     link: ($scope, $el, $attrs) ->
 
+  .directive 'subjects', () ->
+    restrict: 'E'
+    scope:
+      subject: '='
+      index:   '='
+      count:   '='
+    templateUrl: "<%= asset_path 'assets/subjects.html' %>"
+    link: ($scope, $el, $attrs) ->
+      console.log $scope.count
+
 
   .directive 'khan', () ->
     restrict: 'E'
@@ -16,7 +26,17 @@ angular.module('myApp.directives', [])
     templateUrl: "<%= asset_path 'assets/khan.html' %>"
     link: ($scope, $el, $attrs) ->
 
+
+      i = undefined
+      l = $scope.khan['math_progress'].length
+      $scope.subject_chunks = []
+      i = 0
+      while i < l
+        $scope.subject_chunks.push $scope.khan['math_progress'].slice(i, i + 2)
+        i += 2
+
       show_date = true
+
       $scope.check_date_change = (date) ->
         show_date = false
         if date != $scope.exercise_date

@@ -1,35 +1,109 @@
 %div{style: 'font-size:24px'} 
-  Khan Academy Points: {{khan['points']}}
+  Khan Academy
+%p
+  Points: {{khan['points']}}
 %u
 
+%div.container{'ng-repeat' => "subject in subject_chunks"}
+  %br
+  .row
+    .col-xs-4
+      .row
+        .row
+          .col-xs-3
+            %u
+              {{subject[0].subject}}
+          .col-xs-1{'ng-show' => 'subject[0].perc > 0', style: 'float:left'}
+            {{subject[0].perc}}%
+          .col-xs-8           
+        .row
+          .col-xs-12
+            .row.lesson_percent{'ng-repeat' => 'k in subject[0].lessons', 'ng-if'=> "$index % 2 == 0"}
+              %div.col-xs-5
+                .row
+                  .col-xs-9
+                    %span{'ng-show' => 'subject[0].lessons[$index].percent > 0'} 
+                      {{subject[0].lessons[$index].topic}}
 
+                  .col-xs-1
+                    %span{'ng-show' => 'subject[0].lessons[$index].percent > 0'}
+                      {{subject[0].lessons[$index].percent}}%
+                  .col-xs-2
+              %div.col-xs-6
+                .row
+                  .col-xs-9
+                    %span{'ng-show' => 'subject[0].lessons[$index+1].percent > 0'}
+                      {{subject[0].lessons[$index+1].topic}}
+
+                  .col-xs-1
+                    %span{'ng-show' => 'subject[0].lessons[$index+1].percent > 0'}
+                      {{subject[0].lessons[$index+1].percent}}%
+                  .col-xs-2
+
+
+
+    .col-xs-3
+      .row
+        .row
+          .col-xs-3
+            %u
+              {{subject[1].subject}}
+          .col-xs-1{'ng-show' => 'subject[1].perc > 0', style: 'float:left'}
+            {{subject[1].perc}}%
+          .col-xs-8 
+        .row
+          .col-xs-12
+            .row.lesson_percent{'ng-repeat' => 'k in subject[1].lessons', 'ng-if'=> "$index % 2 == 0"}
+              %div.col-xs-6
+                .row
+                  .col-xs-9
+                    %span{'ng-show' => 'subject[1].lessons[$index].percent > 0'} 
+                      {{subject[1].lessons[$index].topic}}
+
+                  .col-xs-1
+                    %span{'ng-show' => 'subject[1].lessons[$index].percent > 0'}
+                      {{subject[1].lessons[$index].percent}}%
+                  .col-xs-2
+              %div.col-xs-6
+                .row
+                  .col-xs-9
+                    %span{'ng-show' => 'subject[0].lessons[$index+1].percent > 0'}
+                      {{subject[1].lessons[$index+1].topic}}
+
+                  .col-xs-1
+                    %span{'ng-show' => 'subject[0].lessons[$index+1].percent > 0'}
+                      {{subject[1].lessons[$index+1].percent}}%
+                  .col-xs-2
+
+%br
+%br
 
 .row
   .col-xs-6
     %div
       Exercises
-    %div{'ng-repeat' => "exercise in khan['exercises'].slice(0, 25)"}
+    %div{'ng-repeat' => "exercise in khan['exercises'].slice(0, 5)"}
       %strong
         %div{'ng-show' => "check_date_change(exercise['date'])", 'am-time-ago' => "exercise['date']"} 
 
       %span{style: 'font-size:12px'}
         {{exercise['exercise_name']}}
     %br
-    %div{'ng-show' => "khan['exercises'].length - 25 > 0"}
+    %div{'ng-show' => "khan['exercises'].length - 5 > 0"}
       {{khan['exercises'].length - 25}} more exercises completed
 
 
   .col-xs-6
     %div
       Videos
-    %div{'ng-repeat' => "video in khan['videos'].slice(0, 15)"}
+    %div{'ng-repeat' => "video in khan['videos'].slice(0, 3)"}
       %strong
         %div{'ng-show' => "check_date_change(video['date'])", 'am-time-ago' => "video['date']"} 
 
       %span{style: 'font-size:12px'}
         {{video['title']}}
     %br
-    %div{'ng-show' => "khan['videos'].length - 15 > 0"}
+    %div{'ng-show' => "khan['videos'].length - 3 > 0"}
       {{khan['videos'].length - 15}} more vids watched
 
 

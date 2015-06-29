@@ -48,13 +48,15 @@ class User
     l.nil? ? nil : l.last
   end
 
+  # Return number of exercise names in user's completed history and in lesson index
+  def self.exercises_topic_level(level, topic, user_exercises)
+    exercises = Exercise.all.where(level: level, topic: topic).map(&:title)
+    (user_exercises.map{|o| o[:exercise_name]} & exercises).count
+  end
+
   def last_khan_exercise
-    lesson = self.last_lesson
-    points = lesson['points'].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
-
-    
-
-
+    lesson    = self.last_lesson
+    points    = lesson['points'].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
     exercises = lesson.exercises.reverse.map{
         |e| 
         {
@@ -63,10 +65,48 @@ class User
         }
       }
 
-    exercises.each do |e|
+    puts "#{self.username} 1"
+    # Percentage of lessons per level:topic complete
+    # {"Early Math"=>[{"Counting"=>[4, 4]}, {"Counting objects"=>[5, 5]} ....}
+    levels = {}
+    MATH_UNIQUE_EXERCISES.each{
+        |level| levels[level] = LEVELS[level].map{
+          |topic, v| {topic: topic,  lessons: [v.count, User.exercises_topic_level(level, topic, exercises )]}
+        }
+      }
 
+    puts "#{self.username} 2"
+    # Get subject and percent complete
+    level_progress_percents = []
+    levels.keys.each{
+      |level|
+      total = 0
+      done  = 0
+      levels[level].each do |e|
+        total += e[:lessons][0];
+        done += e[:lessons][1]; 
+        e[:percent] = ((e[:lessons][1].to_f/e[:lessons][0].to_f) * 100).to_i
+      end
+      perc = ((done.to_f/total.to_f)* 100).to_i
+      if perc > 0
+        level_progress_percents << { subject: level, perc: perc, lessons: levels[level]} 
+      end
+    }
+    puts "#{self.username} 3"
+    # Remove topics that have not been started yet
+    levels.keys.each do |key|
+      indexes_to_delete = []
+      # levels[key] -> [{:topic=>"Counting", :lessons=>[12, 12], :percent=>100}, {:topic=>"Geometry", :lessons=>[9, 5],...] 
+      levels[key].each_with_index do |k, index|
 
-    end    
+        if k[k.keys[1]][1] == 0
+          indexes_to_delete << index
+        end
+      end
+        indexes_to_delete.reverse.each{|i| levels[key].delete_at(i)}
+        levels.delete(key) if levels[key].empty?
+    end  
+
 
     videos = lesson['videos'].select{
                 |v| v['completed'] == true
@@ -78,7 +118,7 @@ class User
                   }.sort_by{|v| v['last_watched']}.reverse
 
 
-      {points: points, exercises: exercises, videos: videos}
+      {points: points, exercises: exercises, videos: videos, khan_percents: levels, math_progress: level_progress_percents}
   end
 
   def last_lang_lesson
@@ -98,7 +138,12 @@ class User
       # Hash of date and lesson name
 
       achievements = Lesson.achievements(lng[1], lesson['calendar']).sort_by{|o| o[:date]}.reverse
-      current_hash = {fluency_score: lng[1]['fluency_score'], streak: lng[1]['streak']}
+      completion_percent = ((achievements.count.to_f/lng[1]['skills'].length.to_f ) * 100).round(1)
+      current_hash = {
+        fluency_score:      (lng[1]['fluency_score'].to_f * 100).to_i,
+        streak:             lng[1]['streak'],
+        completion_percent: completion_percent
+      }
     end
 
     langs = {}

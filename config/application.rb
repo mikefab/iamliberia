@@ -11,6 +11,7 @@ require "action_view/railtie"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
 
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -31,5 +32,7 @@ module Iamliberia
     config.serve_static_files = true
     config.assets.paths << Rails.root.join("vendor","assets","bower_components","bootstrap-sass-official","assets","fonts")
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff)$)
+    Mongo::Logger.logger       = ::Logger.new('mongo.log')
+    Mongo::Logger.logger.level = ::Logger::INFO
   end
 end

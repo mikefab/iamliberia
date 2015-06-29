@@ -1,18 +1,38 @@
-%table
-  %thead
-    %tr
-      %th{ style:'padding-right:20px;'}  Duolingo
-      %th points
-  %tbody
-    %tr{'ng-repeat' => 'lang in student.langs'} 
-      %td
-        {{lang['lang_string']}}
-      %td
-        {{lang['points']}}
+%div{style: 'font-size:24px'} 
+  Duolingo
 
+.row
+  .col-xs-6
+    %div{'ng-repeat' => 'lang in student.langs'} 
+      .row
+        .col-xs-8
+          %strong
+            {{lang['lang_string']}}
+        .col-xs-4
 
-%ul{'ng-repeat' => "achievement in student.achievement_dates.slice(0, 12)"}
-  %li
-    %div{'ng-show' => "achievement.date", 'am-time-ago' => "achievement.date"} 
-    %div{'ng-show' => "!achievement.date", 'am-time-ago' => "student.calendar[0]['d']"}
-    {{achievement.title}}  {{achievement.progress_percent}}% - {{achievement.progress}} lessons
+      .row
+        .col-xs-8
+          Points
+        .col-xs-4
+          {{lang['points']}}
+      .row{'ng-show' => "!!lang['fluency_score']"}
+        .col-xs-8
+          Fluency
+        .col-xs-4
+          {{lang['fluency_score']}}%
+      .row{'ng-show' => "!!lang['completion_percent']"}
+        .col-xs-8
+          Course completed
+        .col-xs-4
+          {{lang['completion_percent']}}%
+
+  .col-xs-6
+    %ul{'ng-repeat' => "achievement in student.achievement_dates.slice(0, 2)"}
+      %li
+        %div{'ng-show' => "achievement.date", 'am-time-ago' => "achievement.date"} 
+        %div{'ng-show' => "!achievement.date", 'am-time-ago' => "student.calendar[0]['d']"}
+        %i
+          {{achievement.title}}
+        %span{'ng-show' => 'achievement.progress_percent < 100'}
+          {{achievement.progress_percent}}%
+        {{achievement.progress}} lessons
