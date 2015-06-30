@@ -1,0 +1,30 @@
+%div.container
+  .row
+    .col-xs-6
+      %div
+        Exercises
+        / %div{'ng-repeat' => "exercise in khan['exercises'].slice(0, 5)"}
+        %div{'ng-repeat' => "exercise in khan['exercises']"}
+          %strong
+            %div{'ng-show' => "check_date_change(exercise['date'])", 'am-time-ago' => "exercise['date']"} 
+
+          %span{style: 'font-size:12px'}
+            {{exercise['exercise_name']}}
+      %br
+      / %div{'ng-show' => "khan['exercises'].length - 5 > 0"}
+      /   {{khan['exercises'].length - 25}} more exercises completed
+
+
+    .col-xs-6
+      %div
+        Videos
+      / %div{'ng-repeat' => "video in khan['videos'].slice(0, 3)"}
+      %div{'ng-repeat' => "video in khan['videos']"}
+        %strong
+          %div{'ng-show' => "check_date_change(video['date'])", 'am-time-ago' => "video['date']"} 
+
+        %span{style: 'font-size:12px'}
+          {{video['title']}}
+      %br
+      / %div{'ng-show' => "khan['videos'].length - 3 > 0"}
+      /   {{khan['videos'].length - 15}} more vids watched

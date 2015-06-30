@@ -1,11 +1,30 @@
 angular.module('myApp.directives', [])
 
-  .directive 'langs', () ->
-    restrict: 'E'
-    scope:
-      student: '='
-    templateUrl: "<%= asset_path 'assets/langs.html' %>"
-    link: ($scope, $el, $attrs) ->
+  .directive 'langs', [
+    '$modal'
+    ($modal) ->
+      restrict: 'E'
+      scope:
+        student: '='
+      templateUrl: "<%= asset_path 'assets/langs.html' %>"
+      link: ($scope, $el, $attrs) ->
+        $scope.more_lessons = _.reduce($scope.student.achievement_dates[2..$scope.student.achievement_dates-1], (sum, num) ->
+          sum += Math.ceil((num.num_lessons * num.progress_percent)/100)
+        , 0)
+
+
+        $scope.open = (size) ->
+          modalInstance = $modal.open(
+            templateUrl: "<%= asset_path 'lang_history.html' %>"
+            controller: 'langModalInstanceCtrl'
+            size: size
+            resolve:
+              student: ->
+                $scope.student
+          )
+      ]
+
+
 
   .directive 'subjects', () ->
     restrict: 'E'
@@ -15,37 +34,55 @@ angular.module('myApp.directives', [])
       count:   '='
     templateUrl: "<%= asset_path 'assets/subjects.html' %>"
     link: ($scope, $el, $attrs) ->
-      console.log $scope.count
 
 
-  .directive 'khan', () ->
-    restrict: 'E'
-    scope:
-      khan:    '='
-      student: '='
-    templateUrl: "<%= asset_path 'assets/khan.html' %>"
-    link: ($scope, $el, $attrs) ->
 
 
-      i = undefined
-      l = $scope.khan['math_progress'].length
-      $scope.subject_chunks = []
-      i = 0
-      while i < l
-        $scope.subject_chunks.push $scope.khan['math_progress'].slice(i, i + 2)
-        i += 2
+  .directive 'khan', [
+    '$modal'
 
-      show_date = true
+    ($modal) ->
+      restrict: 'E'
+      scope:
+        khan:    '='
+        student: '='
+      templateUrl: "<%= asset_path 'assets/khan.html' %>"
+      link: ($scope, $el, $attrs) ->
+        i = undefined
+        l = $scope.khan['math_progress'].length
+        $scope.subject_chunks = []
+        i = 0
+        while i < l
+          $scope.subject_chunks.push $scope.khan['math_progress'].slice(i, i + 2)
+          i += 2
 
-      $scope.check_date_change = (date) ->
-        show_date = false
-        if date != $scope.exercise_date
-          show_date = true
-          $scope.exercise_date = date
-        show_date
-        
-      $scope.exercise_date = $scope.khan['exercises'][0]['date']
+        show_date = true
 
+        $scope.check_date_change = (date) ->
+          show_date = false
+          if date != $scope.exercise_date
+            show_date = true
+            $scope.exercise_date = date
+          show_date
+          
+        $scope.exercise_date = $scope.khan['exercises'][0]['date']
+
+        $scope.open = (size) ->
+          modalInstance = $modal.open(
+            templateUrl: "<%= asset_path 'khan_history.html' %>"
+            controller: 'ModalInstanceCtrl'
+            size: size
+            resolve:
+              exercises: ->
+                $scope.khan
+          )
+          modalInstance.result.then ((selectedItem) ->
+            $scope.selected = selectedItem
+          ), ->
+            console.log "Modal dismissed at: " + new Date()
+
+
+    ]
 
 
   .directive 'history', () ->

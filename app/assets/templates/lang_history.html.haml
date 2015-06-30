@@ -1,0 +1,10 @@
+%ul{'ng-repeat' => "achievement in student.achievement_dates"}
+  %li
+    %div{'ng-show' => "achievement.date", 'am-time-ago' => "achievement.date"}
+      {{achievement.date}}
+    %div{'ng-show' => "!achievement.date", 'am-time-ago' => "student.calendar[0]['d']"}
+    %i
+      {{achievement.title}}
+    %span{'ng-show' => 'achievement.progress_percent < 100'}
+      {{achievement.progress_percent}}%
+    {{achievement.progress}} lessons

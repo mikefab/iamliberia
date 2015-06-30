@@ -2,6 +2,14 @@
   Khan Academy
 %p
   Points: {{khan['points']}}
+%p
+  %div{style: 'font-size:10px'}
+    Began
+    %span{'ng-show' => "!!khan['exercises'][0]['date']", 'am-time-ago' => "khan['exercises'][khan['exercises'].length-1]['date']"}
+    %br
+    Last seen
+    %span{'ng-show' => "!!khan['exercises'][0]['date']", 'am-time-ago' => "khan['exercises'][0]['date']"}
+ 
 %u
 
 %div.container{'ng-repeat' => "subject in subject_chunks"}
@@ -67,44 +75,20 @@
               %div.col-xs-6
                 .row
                   .col-xs-9
-                    %span{'ng-show' => 'subject[0].lessons[$index+1].percent > 0'}
+                    %span{'ng-show' => 'subject[1].lessons[$index+1].percent > 0'}
                       {{subject[1].lessons[$index+1].topic}}
 
                   .col-xs-1
-                    %span{'ng-show' => 'subject[0].lessons[$index+1].percent > 0'}
+                    %span{'ng-show' => 'subject[1].lessons[$index+1].percent > 0'}
                       {{subject[1].lessons[$index+1].percent}}%
                   .col-xs-2
 
+
+
 %br
-%br
-
-.row
-  .col-xs-6
-    %div
-      Exercises
-    %div{'ng-repeat' => "exercise in khan['exercises'].slice(0, 5)"}
-      %strong
-        %div{'ng-show' => "check_date_change(exercise['date'])", 'am-time-ago' => "exercise['date']"} 
-
-      %span{style: 'font-size:12px'}
-        {{exercise['exercise_name']}}
-    %br
-    %div{'ng-show' => "khan['exercises'].length - 5 > 0"}
-      {{khan['exercises'].length - 25}} more exercises completed
+%a{'ng-click' => "open('lg')"} {{khan['exercises'].length}} exercises and videos completed
 
 
-  .col-xs-6
-    %div
-      Videos
-    %div{'ng-repeat' => "video in khan['videos'].slice(0, 3)"}
-      %strong
-        %div{'ng-show' => "check_date_change(video['date'])", 'am-time-ago' => "video['date']"} 
-
-      %span{style: 'font-size:12px'}
-        {{video['title']}}
-    %br
-    %div{'ng-show' => "khan['videos'].length - 3 > 0"}
-      {{khan['videos'].length - 15}} more vids watched
 
 
 / %div{'dir-paginate' => "exercise in khan['exercises']| itemsPerPage: 20", "pagination-id" => "student.username"}

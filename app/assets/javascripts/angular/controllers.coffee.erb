@@ -16,3 +16,33 @@ angular.module('myApp.controllers', [])
 
 
 ]
+
+.controller 'langModalInstanceCtrl', [
+  '$scope'
+  'student'
+  ($scope, student) ->
+    $scope.student = student
+
+    $scope.check_date_change = (date) ->
+      show_date = false
+      if date != $scope.exercise_date
+        show_date = true
+        $scope.exercise_date = date
+      show_date
+
+]
+
+.controller 'ModalInstanceCtrl', [
+  '$scope'
+  'exercises'
+  ($scope, exercises) ->
+    $scope.khan = exercises
+
+    $scope.check_date_change = (date) ->
+      show_date = false
+      if date != $scope.exercise_date
+        show_date = true
+        $scope.exercise_date = date
+      show_date
+
+]
