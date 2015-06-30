@@ -2,6 +2,39 @@ require 'rubygems'
 require 'mechanize'
 require 'json'
 require 'net/http'
+require 'nokogiri'
+require 'open-uri'
+
+task :fetch_codecademy => [:environment] do
+  User.all.each do |u|
+    url = "http://www.codecademy.com/users/#{u.email}/achievements"
+
+    begin
+      doc = Nokogiri::HTML(open( url ))
+
+      @badges = []
+      doc.css('.achievement-card').each do |l|
+        name = l.css('h5').text
+        @badges << name
+      end
+
+      unless @badges.empty?
+        unless @badges[0].to_i == 0
+          Badge.create!(
+            badges: @badges[0].to_i,
+            username: u.username,
+            user_id: u.id,
+            max_streak: @badges.last
+          ) 
+        end
+
+      end
+    rescue
+      "Nope for #{u.username}"
+    end
+
+  end
+end
 
 
 task :update_khan_exercises => [:environment] do

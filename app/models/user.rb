@@ -27,7 +27,7 @@ class User
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
   has_many :lessons, :foreign_key => 'username'
-
+  has_many :badges, :foreign_key => 'username'
   def last_activity_date
     l = self.last_lesson # Khan lesson
     l.nil? ? Date.new(1900,1,1) : Date.parse(self.last_lesson.exercises.last['date'])
@@ -47,6 +47,13 @@ class User
 
     l.nil? ? nil : l.last
   end
+
+
+  def codecademy_badges
+    b = Badge.where(username: self.username).last
+    return b.nil? ? 0 : b.badges
+  end
+
 
   # Return number of exercise names in user's completed history and in lesson index
   def self.exercises_topic_level(level, topic, user_exercises)
@@ -92,7 +99,8 @@ class User
         level_progress_percents << { subject: level, perc: perc, lessons: levels[level]} 
       end
     }
-    puts "#{self.username} 3"
+
+
     # Remove topics that have not been started yet
     levels.keys.each do |key|
       indexes_to_delete = []

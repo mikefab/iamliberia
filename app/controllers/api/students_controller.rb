@@ -12,6 +12,7 @@ class Api::StudentsController < ApplicationController
         calendar:           u.last_lang_lesson[:calendar],
         achievement_dates:  u.last_lang_lesson[:achievement_dates],
         khan_exercises:     u.last_khan_exercise,
+        codecademy_badges:  u.codecademy_badges,
         profile_image:      ActionController::Base.helpers.asset_path("assets/#{u.username}.jpg")
       }
     end
