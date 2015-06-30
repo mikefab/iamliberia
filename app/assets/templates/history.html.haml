@@ -11,5 +11,9 @@
 %br
 .row
   .col-xs-12
-    %div.topic{'ng-show' => 'student.codecademy_badges > 0'}
-      Codecademy badges: {{student.codecademy_badges}}
+    %div{'ng-show' => 'student.codecademy_badges > 0'}
+      %div.topic
+        Codecademy
+
+      %p
+        Badges: {{student.codecademy_badges}} 
