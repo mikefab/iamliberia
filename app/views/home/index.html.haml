@@ -24,7 +24,7 @@
             %img.img-rounded{'ng-src' => 'assets/{{student.username}}', style: 'width:100%'}
           .col-xs-7
             %p
-              {{student.name}}
+              {{just_first_name(student.name)}}
             %p
               %history{student: 'student'}
 
