@@ -21,6 +21,7 @@ task :fetch_codecademy => [:environment] do
       unless @badges.empty?
         unless @badges[0].to_i == 0
           Badge.create!(
+            created_at: DateTime.now,
             badges: @badges[0].to_i,
             username: u.username,
             user_id: u.id,
