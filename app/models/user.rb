@@ -72,7 +72,6 @@ class User
         }
       }
 
-    puts "#{self.username} 1"
     # Percentage of lessons per level:topic complete
     # {"Early Math"=>[{"Counting"=>[4, 4]}, {"Counting objects"=>[5, 5]} ....}
     levels = {}
@@ -82,7 +81,6 @@ class User
         }
       }
 
-    puts "#{self.username} 2"
     # Get subject and percent complete
     level_progress_percents = []
     levels.keys.each{
@@ -91,7 +89,7 @@ class User
       done  = 0
       levels[level].each do |e|
         total += e[:lessons][0];
-        done += e[:lessons][1]; 
+        done  += e[:lessons][1]; 
         e[:percent] = ((e[:lessons][1].to_f/e[:lessons][0].to_f) * 100).to_i
       end
       perc = ((done.to_f/total.to_f)* 100).to_i
@@ -114,7 +112,6 @@ class User
         indexes_to_delete.reverse.each{|i| levels[key].delete_at(i)}
         levels.delete(key) if levels[key].empty?
     end  
-
 
     videos = lesson['videos'].select{
                 |v| v['completed'] == true
