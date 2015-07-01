@@ -1,6 +1,6 @@
 %div.container
   .row
-    .col-xs-6
+    .col-xs-4
       %div
         Exercises
         / %div{'ng-repeat' => "exercise in khan['exercises'].slice(0, 5)"}
@@ -15,7 +15,7 @@
       /   {{khan['exercises'].length - 25}} more exercises completed
 
 
-    .col-xs-6
+    .col-xs-4
       %div
         Videos
       / %div{'ng-repeat' => "video in khan['videos'].slice(0, 3)"}
