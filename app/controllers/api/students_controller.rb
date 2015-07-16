@@ -4,10 +4,10 @@ class Api::StudentsController < ApplicationController
   def index
     students = []
     if Rails.cache.exist?('students')
-      puts "\n\nBBBBBB!!!!\n\n"
+      puts "\n\n#{Rails.env} BBBBBB!!!! \n\n"
       students = Rails.cache.read('students')
     else
-      puts "AAAAAA!!!!\n\n"
+      puts "#{Rails.env} AAAAAA!!!!\n\n"
       User.all.sort_by{|u| u.last_activity_date}.reverse.each do |u|
         students << {
           username:           u.username,
