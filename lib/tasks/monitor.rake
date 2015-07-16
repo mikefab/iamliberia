@@ -4,6 +4,7 @@ task :dyno_ping do
 
   if ENV['PING_URL']
     uri = URI(ENV['PING_URL'])
+    puts "About to ping #{ENV['PING_URL']}"
     Net::HTTP.get_response(uri)
   end
 end
