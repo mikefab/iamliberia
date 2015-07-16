@@ -7,7 +7,6 @@ class Api::StudentsController < ApplicationController
       students = Rails.cache.read('students')
     else
       User.all.sort_by{|u| u.last_activity_date}.reverse.each do |u|
-        
         students << {
           username:           u.username,
           name:               u.name,
@@ -19,7 +18,7 @@ class Api::StudentsController < ApplicationController
           profile_image:      ActionController::Base.helpers.asset_path("assets/#{u.username}.jpg")
         }
       end
-      Rails.cache.fetch('students', :expires_in => 1.day){students}
+      Rails.cache.fetch('students', :expires_in => 1.month){students}
     end
     render json: students
   end
